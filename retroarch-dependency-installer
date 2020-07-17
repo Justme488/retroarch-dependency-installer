@@ -1,0 +1,158 @@
+#!/usr/bin/env bash
+
+# This script will install dependencies for building retroarch and cores
+
+# Add some color
+GREEN='\033[0;92m'
+NC='\033[0m'
+RED_BLINK='\033[6;91m'
+
+# Tell user what it does
+echo -e "${GREEN}This will install required dependencies for build-retroarch${GREEN_BLINK}"
+echo ""
+read -p "Press any key to continue..." -n1 -s
+clear
+
+# See if any build dependencies need to be installed for building retroarch itself, and install if needed
+if [[ $(apt-get build-dep -s retroarch) == *"The following NEW packages will be installed:"* ]]; then
+  echo -e "${GREEN}Depencies are required to build Retroarch itself${NC}"
+    if sudo -nv &>/dev/null; then
+      echo ""
+      echo -e "${GREEN}Installing Retroarch build dependencies${NC}"
+      sudo apt-get build-dep -y retroarch
+      clear
+    else
+      echo ""
+      echo -e "${GREEN}Please enter your password${NC}"
+      echo ""
+      sudo -v
+      echo ""
+      echo -e "${GREEN}installing Retroarch build dependencies${NC}"
+      sudo apt-get build-dep -y retroarch
+      clear
+    fi
+fi
+
+# See if git needs to be installed, and install it if needed
+if [[ -z $(apt version git) ]]; then
+  echo -e "${GREEN}git needs to be installed${NC}"
+    if sudo -nv &>/dev/null; then
+      echo ""
+      echo -e "${GREEN}Installing git${NC}"
+      sudo apt-get install -y git
+      clear
+    else
+      echo ""
+      echo -e "${GREEN}Please enter your password${NC}"
+      echo ""
+      sudo -v
+      echo ""
+      echo -e "${GREEN}installing git${NC}"
+      sudo apt-get install -y git
+      clear
+    fi
+fi
+
+# See if nasm needs to be installed, and install it if needed
+if [[ -z $(apt version nasm) ]]; then
+  echo -e "${GREEN}nasm needs to be installed${NC}"
+    if sudo -nv &>/dev/null; then
+      echo ""
+      echo -e "${GREEN}Installing nasm${NC}"
+      sudo apt-get install -y nasm
+      clear
+    else
+      echo ""
+      echo -e "${GREEN}Please enter your password${NC}"
+      echo ""
+      sudo -v
+      echo ""
+      echo -e "${GREEN}installing nasm${NC}"
+      sudo apt-get install -y nasm
+      clear
+    fi
+fi
+
+# See if cmake needs to be installed, and install it if needed
+if [[ -z $(apt version cmake) ]]; then
+  echo -e "${GREEN}cmake needs to be installed${NC}"
+    if sudo -nv &>/dev/null; then
+      echo ""
+      echo -e "${GREEN}Installing cmake${NC}"
+      sudo apt-get install -y cmake
+      clear
+    else
+      echo ""
+      echo -e "${GREEN}Please enter your password${NC}"
+      echo ""
+      sudo -v
+      echo ""
+      echo -e "${GREEN}installing cmake${NC}"
+      sudo apt-get install -y cmake
+      clear
+    fi
+fi
+
+# See if boost needs to be installed, and install it if needed
+if [[ $(apt-get install -s libboost-all-dev) == *"The following NEW packages will be installed:"* ]]; then
+  echo -e "${GREEN}libboost needs to be installed${NC}"
+    if sudo -nv &>/dev/null; then
+      echo ""
+      echo -e "${GREEN}Installing libboost${NC}"
+      sudo apt-get install -y libboost-all-dev
+      clear
+    else
+      echo ""
+      echo -e "${GREEN}Please enter your password${NC}"
+      echo ""
+      sudo -v
+      echo ""
+      echo -e "${GREEN}installing libboost${NC}"
+      sudo apt-get install -y libboost-all-dev
+      clear
+    fi
+fi
+
+# See if gcc-7 needs to be installed, and install it if needed
+if [[ -z $(apt version gcc-7) ]]; then
+  echo -e "${GREEN}gcc-7 needs to be installed${NC}"
+    if sudo -nv &>/dev/null; then
+      echo ""
+      echo -e "${GREEN}Installing gcc-7${NC}"
+      sudo apt-get install -y gcc-7
+      clear
+    else
+      echo ""
+      echo -e "${GREEN}Please enter your password${NC}"
+      echo ""
+      sudo -v
+      echo ""
+      echo -e "${GREEN}installing gcc-7${NC}"
+      sudo apt-get install -y gcc-7
+      clear
+    fi
+fi
+# See if gcc-7 needs to be installed, and install it if needed
+if [[ -z $(apt version g++-7) ]]; then
+  echo -e "${GREEN}g++-7 needs to be installed${NC}"
+    if sudo -nv &>/dev/null; then
+      echo ""
+      echo -e "${GREEN}Installing g++-7${NC}"
+      sudo apt-get install -y g++-7
+      clear
+    else
+      echo ""
+      echo -e "${GREEN}Please enter your password${NC}"
+      echo ""
+      sudo -v
+      echo ""
+      echo -e "${GREEN}installing g++-7${NC}"
+      sudo apt-get install -y g++-7
+      clear
+    fi
+fi
+
+echo -e "${GREEN}You are done installing dependencies${RED_BLINK}"
+echo ""
+read -p "Press any key to exit..." -n1 -s
+exit
