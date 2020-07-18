@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+
+# This script will install dependencies for building retroarch and cores
+
+# Add some color
+GREEN='\033[0;92m'
+NC='\033[0m'
+RED_BLINK='\033[6;91m'
+
+# Tell user what it does
+echo -e "${GREEN}This will install required dependencies for build-retroarch${GREEN_BLINK}"
+echo ""
+read -p "Press any key to continue..." -n1 -s
+clear
+
+# Update the system
+echo -e "${GREEN}Lets update the system before we begin${NC}"
+echo ""
+echo -e "${GREEN}Please enter you password${NC}"
+echo ""
+sudo -v
+echo ""
+sleep 1
+sudo apt-get update
+clear
+
+# Check if source code repositories are enabled
+if [[ ! -f "/etc/apt/sources.list.d/official-source-repositories.list" ]]; then
+  echo -e "${GREEN}Source code repositories are not enabled${NC}"
+  echo ""
+  echo -e "${GREEN}Please enable source code${NC}"
+  echo ""
+  echo  -e "${GREEN}Then run this again${RED_BLINK}"
+  echo ""
+  read -p "Press any key to exit..." -n1 -s
+  exit
+fi
+
+# See if any build dependencies need to be installed for building retroarch itself, and install if needed
+if [[ $(apt-get build-dep -s retroarch) == *"The following NEW packages will be installed:"* ]]; then
+  echo -e "${GREEN}Installing Retroarch build dependencies${NC}"
+  sleep 1
+  sudo apt-get build-dep -y retroarch
+  clear
+fi
+
+# See if git needs to be installed, and install it if needed
+if [[ -z $(apt version git) ]]; then
+  echo -e "${GREEN}Installing git${NC}"
+  sleep 1
+  sudo apt-get install -y git
+  clear
+fi
+
+# See if nasm needs to be installed, and install it if needed
+if [[ -z $(apt version nasm) ]]; then
+  echo -e "${GREEN}Installing nasm${NC}"
+  sleep 1
+  sudo apt-get install -y nasm
+  clear
+fi
+
+# See if cmake needs to be installed, and install it if needed
+if [[ -z $(apt version cmake) ]]; then
+  echo -e "${GREEN}Installing cmake${NC}"
+  sleep 1
+  sudo apt-get install -y cmake
+  clear
+fi
+
+# See if boost needs to be installed, and install it if needed
+if [[ $(apt-get install -s libboost-all-dev) == *"The following NEW packages will be installed:"* ]]; then
+  echo -e "${GREEN}Installing libboost${NC}"
+  sleep 1
+  sudo apt-get install -y libboost-all-dev
+  clear
+fi
+
+# See if gcc-7 needs to be installed, and install it if needed
+if [[ -z $(apt version gcc-7) ]]; then
+  echo -e "${GREEN}Installing gcc-7${NC}"
+  sleep 1
+  sudo apt-get install -y gcc-7
+  clear
+fi
+
+# See if gcc-7 needs to be installed, and install it if needed
+if [[ -z $(apt version g++-7) ]]; then
+  echo -e "${GREEN}Installing g++-7${NC}"
+  sleep 1
+  sudo apt-get install -y g++-7
+  clear
+fi
+
+echo -e "${GREEN}You are done installing dependencies${RED_BLINK}"
+echo ""
+read -p "Press any key to exit..." -n1 -s
