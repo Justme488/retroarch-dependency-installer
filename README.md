@@ -1,6 +1,6 @@
 # retroarch-dependency-installer
 
-## This will install the needed dependencies for [_build-retroarch_](https://www.google.com) script
+## This will install the needed dependencies for [_build-retroarch_](https://github.com/Justme488/build-retroarch) script
 * Tested with Linux Mint 20
 * _Should_ work with ubuntu
 
